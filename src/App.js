@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { ModalProvider, BaseModalBackground } from "styled-react-modal";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+
+import Controller from "./features/Housie/Controller";
+import GameGenerator from "./features/Housie/GameGenerator";
+
+class App extends Component {
+  componentWillMount() {}
+
+  render() {
+    return (
+      <ModalProvider backgroundComponent={FadingBackground}>
+        <BrowserRouter>
+          <div className="App">
+            <Switch>
+              <Route exact path="/game" component={Controller} />
+            </Switch>
+
+            <Switch>
+              <Route exact path="/housie" component={GameGenerator} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </ModalProvider>
+    );
+  }
 }
 
 export default App;
+
+const FadingBackground = styled(BaseModalBackground)`
+  opacity: ${(props) => props.opacity};
+  background-color: ${(props) => props.background};
+  transition: opacity ease 200ms;
+`;
